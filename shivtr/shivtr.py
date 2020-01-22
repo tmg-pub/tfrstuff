@@ -9,14 +9,14 @@ def HTMLtoDiscord( html ):
    html = re.sub( r"<br>", "\n", html )
    html = re.sub( r"<li>", "\n• ", html )
    
-   html = re.sub( r"<b>(\s*)", r"\1**", html )
-   html = re.sub( r"(\s*)<\/b>", r"**\1", html )
+   html = re.sub( r"<(?:b|strong)>(\s*)", r"\1**", html )
+   html = re.sub( r"(\s*)<\/(?:b|strong)>", r"**\1", html )
 
-   html = re.sub( r"<u>(\s*)", r"\1__", html )
-   html = re.sub( r"(\s*)<\/u>", r"__\1", html )
+   html = re.sub( r"<(?:u|ins)>(\s*)", r"\1__", html )
+   html = re.sub( r"(\s*)<\/(?:u|ins)>", r"__\1", html )
 
-   html = re.sub( r"<i>(\s*)", r"\1*", html )
-   html = re.sub( r"(\s*)<\/i>", r"*\1", html )
+   html = re.sub( r"<(?:i|em)>(\s*)", r"\1*", html )
+   html = re.sub( r"(\s*)<\/(?:i|em)>", r"*\1", html )
    
    html = re.sub( r"<a.+?href=\"([^\"]+)\".+?>(.+)<\/a>", r"[\2](\1)", html );
    
