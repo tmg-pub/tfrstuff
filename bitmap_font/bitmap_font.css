@@ -3,6 +3,11 @@ body {
    font-family: arial;
 }
 
+.content {
+   width: 400px;
+   margin: auto;
+}
+
 #dropzone {
    width: 300px;
    padding: 80px 20px;
