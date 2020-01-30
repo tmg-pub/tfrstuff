@@ -174,13 +174,14 @@ for result in reversed(results):
       postid = postid[1]
    else:
       postid = r"\d+"
+   print( "POSTID:", postid )
    
    # Fetch the page with this post.   
    link_without_hash = re.sub( "#.+", "", result[2] )
    data = requests.get( base_url + link_without_hash, cookies=cookies ).text
    
    # Parse the post contents.
-   parsed = re.search( r"<div name=\"forum_post_%s\"[^>]+>.+?<th class=\"forum_posts_date.+?><a[^>]+>.+?</a>(.+?)</th>.+?member_avatar.+?background-image:\s*url\(&#39;(.+?)&#39;\).+?<div class=\"poster_name\">(.+?)</div>.+?</div>.+?<div class=\"entry\">(.+?)</div>" % postid, data )
+   parsed = re.search( r"<div name=\"forum_post_%s\"[^>]+>.+?<th class=\"forum_posts_date.+?><a[^>]+>.+?</a>(.+?)</th>.+?member_avatar.+?background-image:\s*url\(&#39;(.+?)&#39;\).+?<div class=\"poster_name\">(.+?)</div>.+?</div>.+?<div class=\"entry\">(.+?)</div>" % postid, data, re.DOTALL )
    
    print( "DATE:",   parsed[1] )
    print( "AVATAR:", parsed[2] )
@@ -190,6 +191,10 @@ for result in reversed(results):
    #  a middle dot.
    date = re.sub( "&middot;.*", "", parsed[1] ).strip()
    avatar = parsed[2]
+   if avatar[0] == "/":
+      avatar = base_url + avatar
+      print( "AVATAR FIXED:", avatar )
+   
    print( "FIXED DATE:", date)
    
    content, image = HTMLtoDiscord( parsed[4] )
