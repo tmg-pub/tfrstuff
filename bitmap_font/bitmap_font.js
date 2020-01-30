@@ -66,14 +66,14 @@ function processImage( image ) {
          //  block if the state changes - sometimes a line fulfills the
          //  criteria of multiple of these states.
       case "start_inner":
-         if( strongPixels >= 5 ) {
+         if( strongPixels >= 2 ) {
             state = "end_inner";
             charInnerLeft = x;
          } else {
             break;
          }
       case "end_inner":
-         if( strongPixels < 5 ) {
+         if( strongPixels < 2 ) {
             state = "end_outer";
             charInnerRight = x;
          } else {
@@ -145,12 +145,12 @@ function processImage( image ) {
       // Be careful for off-by-one errors.
       // We want to include one extra pixel for the bounding boxes, which may
       //  be helpful to render clean glyphs if the font is scaled.
-      var bgOffset = chars[i].outerLeft - 1;
-      var marginLeft = chars[i].innerLeft - bgOffset;
-      var width = chars[i].outerRight + 1 - bgOffset;
+      var bgOffset    = chars[i].outerLeft - 1;
+      var marginLeft  = chars[i].innerLeft - bgOffset;
+      var width       = chars[i].outerRight + 1 - bgOffset;
       var marginRight = (chars[i].outerRight + 1) - chars[i].innerRight;
-      var comma = i == chars.length-1 ? "" : ",";
-      var letter = letters[i];
+      var comma       = i == chars.length-1 ? "" : ",";
+      var letter      = letters[i];
       
       print( `      ${-bgOffset}, ${-marginLeft}, ${width}, ${-marginRight}${comma} // ${letter}` );
    }
